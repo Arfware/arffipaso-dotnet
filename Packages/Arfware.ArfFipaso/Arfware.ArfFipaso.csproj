@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+
+		<PackageVersion>1.0.0</PackageVersion>
+		<Authors>Arfware</Authors>
+		<Company>Arfware</Company>
+		<Product>Arfware ArfFipaso</Product>
+		<Description>ArfFipaso is Automatic Filtering, Pagination and Sorting Queries Generator Library for Dotnet</Description>
+		<Copyright>Copyright © Arfware</Copyright>
+		<Summary>ArfFipaso is Automatic Filtering, Pagination and Sorting Queries Generator Library for Dotnet</Summary>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Title>Arfware.ArfFipaso</Title>
+		<PackageId>Arfware.ArfFipaso</PackageId>
+		<PackageTags>Arfware,ArfFipaso,Filter,Pagination,Sorting,Query</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/Arfware/arffipaso-dotnet</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Arfware/arffipaso-dotnet</RepositoryUrl>
+		<RootNamespace>Arfware.ArfFipaso</RootNamespace>
+		<AssemblyName>Arfware.ArfFipaso</AssemblyName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="../LICENSE.txt" Pack="true" PackagePath="" />
+		<None Include="../icon.png" Pack="true" PackagePath="" />
+		<None Include="../../README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+</Project>
