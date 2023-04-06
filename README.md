@@ -1,4 +1,4 @@
-# ArfFipaso Dotnet Libraries
+# ArfFipaso
 
 ArfFipaso is Automatic Filtering, Pagination and Sorting Queries Generator Library for Dotnet.
 
