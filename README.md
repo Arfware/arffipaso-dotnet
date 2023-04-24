@@ -9,6 +9,12 @@ Features
 - PAgination
 - SOrting
 
+This repository contains Arfware.ArfFipaso* Nuget packages. 
+
 Detailed documentation is in the 'Z-Docs' folder.
 
-This repository contains Arfware.ArfFipaso* Nuget packages. 
+## Changelogs
+
+### 1.0.0
+
+- Added Core Features.
