@@ -11,7 +11,7 @@ namespace Example
 
 		public static void FilteringStringFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringStringFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringStringFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -33,7 +33,7 @@ namespace Example
 
 		public static void FilteringStringFieldsInChildObject()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringStringFieldsInChildObject");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringStringFieldsInChildObject\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -55,7 +55,7 @@ namespace Example
 
 		public static void FilteringDateTimeFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringDateTimeFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringDateTimeFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -78,7 +78,7 @@ namespace Example
 
 		public static void FilteringDoubleNumberFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringDoubleNumberFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringDoubleNumberFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -100,7 +100,7 @@ namespace Example
 
 		public static void FilteringNumberRangeFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringNumberRangeFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringNumberRangeFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -123,7 +123,7 @@ namespace Example
 
 		public static void FilteringGuidFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringGuidFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringGuidFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -145,7 +145,7 @@ namespace Example
 
 		public static void FilteringGuidFieldsInChildObject()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringGuidFieldsInChildObject");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringGuidFieldsInChildObject\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -167,7 +167,7 @@ namespace Example
 
 		public static void FilteringNumberFields()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringNumberFields");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringNumberFields\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -189,7 +189,7 @@ namespace Example
 
 		public static void FilteringNumberInList()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringNumberInList");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringNumberInList\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -218,7 +218,7 @@ namespace Example
 
 		public static void FilteringStringInList()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringStringInList");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringStringInList\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()
@@ -238,10 +238,32 @@ namespace Example
 			});
 		}
 
+		public static void FilteringStringInListOfList()
+		{
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringStringInListOfList\n");
+
+			var filters = new List<XFilterItem>(){
+				new XFilterItem()
+				{
+					Key = "other_Hobbies_Activities_IsCompleted",
+					IsUsed = true,
+					Type = ColumnTypes.Boolean,
+					Values = new List<object>(){ true } ,
+				},
+			};
+
+			var matcheds = StaticData.Students.AsQueryable().Filter(filters).ToList();
+			System.Console.WriteLine($"Matched Count: {matcheds.Count}");
+			matcheds.ForEach((s) =>
+			{
+				System.Console.WriteLine($"Name Surname: {s.Name}");
+			});
+		}
+
 
 		public static void OrTest()
 		{
-			System.Console.WriteLine("\n---------------------------------------\n FilteringNumberInList");
+			System.Console.WriteLine("\n---------------------------------------\n\n# FilteringNumberInList\n");
 
 			var filters = new List<XFilterItem>(){
 				new XFilterItem()

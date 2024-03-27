@@ -27,12 +27,38 @@ namespace Example
 						new Hobby()
 						{
 							Hid=1,
-							Name="Sailing"
+							Name="Sailing",
+							Activities = new List<Activity>()
+							{
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-1),
+									IsCompleted = true,
+								},
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-3),
+									IsCompleted = true,
+								},
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-5),
+									IsCompleted = true,
+								}
+							}
 						},
 						new Hobby()
 						{
 							Hid=2,
-							Name="Table Games"
+							Name="Table Games",
+							Activities = new List<Activity>()
+							{
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-1),
+									IsCompleted = true,
+								},
+							}
 						}
 					},
 				}
@@ -57,12 +83,28 @@ namespace Example
 						new Hobby()
 						{
 							Hid=3,
-							Name="Swimming"
+							Name="Swimming",
+							Activities = new List<Activity>()
+							{
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-1),
+									IsCompleted = true,
+								},
+							}
 						},
 						new Hobby()
 						{
 							Hid=4,
-							Name="Tennis"
+							Name="Tennis",
+							Activities = new List<Activity>()
+							{
+								new Activity()
+								{
+									Date = DateTime.Now.AddDays(-1),
+									IsCompleted = true,
+								},
+							}
 						}
 					},
 				}

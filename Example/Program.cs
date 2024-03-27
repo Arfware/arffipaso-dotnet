@@ -5,13 +5,15 @@
 		static void Main(string[] args)
 		{
 			RunFilterExamples();
-			RunPaginationExamples();
-			RunSortingExamples();
+			// RunPaginationExamples();
+			// RunSortingExamples();
 		}
 
 		static void RunFilterExamples()
 		{
 			System.Console.WriteLine("Filtering Example\n");
+			FilteringExamples.FilteringStringInListOfList();
+			FilteringExamples.FilteringStringInList();
 			FilteringExamples.FilteringGuidFieldsInChildObject();
 			FilteringExamples.FilteringDateTimeFields();
 			FilteringExamples.FilteringDoubleNumberFields();
@@ -22,7 +24,6 @@
 			FilteringExamples.FilteringStringFieldsInChildObject();
 			FilteringExamples.FilteringNumberFields();
 			FilteringExamples.FilteringNumberInList();
-			FilteringExamples.FilteringStringInList();
 			FilteringExamples.OrTest();
 		}
 

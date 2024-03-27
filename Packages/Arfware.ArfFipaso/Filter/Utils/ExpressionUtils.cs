@@ -24,7 +24,7 @@ namespace ArfFipaso.Filter.Utils
 			return safeMemberExpression;
 		}
 
-		internal static Expression GetLambdaWithConstantEqual2(ParameterExpression parameterExpression, Expression memberExpression, object value)
+		internal static LambdaExpression GetLambdaWithConstantEqual2(ParameterExpression parameterExpression, Expression memberExpression, object value)
 		{
 			if (memberExpression.Type.BaseType == typeof(Enum))
 				value = Enum.ToObject(memberExpression.Type, value);
@@ -38,7 +38,7 @@ namespace ArfFipaso.Filter.Utils
 			return innnerLambda;
 		}
 
-		internal static Expression GetLambdaWithConstantEqual(ParameterExpression parameterExpression, Expression memberExpression, List<object> values, string conditionTypeAsString)
+		internal static LambdaExpression GetLambdaWithConstantEqual(ParameterExpression parameterExpression, Expression memberExpression, List<object> values, string conditionTypeAsString)
 		{
 			BinaryExpression binaryExpression = null;
 
@@ -82,7 +82,7 @@ namespace ArfFipaso.Filter.Utils
 			return innnerLambda;
 		}
 
-		internal static Expression GetLambdaWithConstantContains(ParameterExpression parameterExpression, Expression memberExpression, object value)
+		internal static LambdaExpression GetLambdaWithConstantContains(ParameterExpression parameterExpression, Expression memberExpression, object value)
 		{
 			ConstantExpression valExpression = Expression.Constant(value.ToString().Trim().ToLower(), typeof(string));
 			MethodInfo stringToLowerMethod = ReflectionUtils.GetStringToLowerMethod();
@@ -94,7 +94,7 @@ namespace ArfFipaso.Filter.Utils
 			return lambda;
 		}
 
-		internal static Expression GetLambdaWithConstantRange(ParameterExpression parameterExpression, Expression memberExpression, object minValue, object maxValue)
+		internal static LambdaExpression GetLambdaWithConstantRange(ParameterExpression parameterExpression, Expression memberExpression, object minValue, object maxValue)
 		{
 			var minExpression = Expression.GreaterThanOrEqual(memberExpression, Expression.Constant(minValue, minValue.GetType()));
 			var maxExpression = Expression.LessThanOrEqual(memberExpression, Expression.Constant(maxValue, maxValue.GetType()));
@@ -104,7 +104,7 @@ namespace ArfFipaso.Filter.Utils
 			return lambda;
 		}
 
-		internal static Expression GetListLambda(ParameterExpression baseParameterExpression, Expression baseMemberExpression, ParameterExpression listParameterExpression, Expression lambda)
+		internal static Expression GetListLambda2(ParameterExpression baseParameterExpression, Expression baseMemberExpression, ParameterExpression listParameterExpression, Expression lambda)
 		{
 			MethodInfo anyMethod = ReflectionUtils.GetGenericAnyMethod(listParameterExpression.Type);
 			var callExpression = Expression.Call(anyMethod, baseMemberExpression, lambda); // memberExpr
@@ -112,7 +112,24 @@ namespace ArfFipaso.Filter.Utils
 			return outherLambda;
 		}
 
-		internal static (ParameterExpression BaseParameterExpression, Expression BaseMemberExpression, ParameterExpression ListParameterExpression, Expression ListMemberExpression) GetExpressions(Type baseObjectType, string propName)
+		internal static Expression GetListLambda(List<Expression> parameterExpressions, List<Expression> memberExpressions, LambdaExpression lambda)
+		{
+			LambdaExpression lambdaExpression = lambda;
+
+			for (int i = parameterExpressions.Count - 2; i >= 0; i--)
+			{
+				var memberExpression = memberExpressions[i];
+				var parameterExpression = parameterExpressions[i];
+				var lastParameterExpression = parameterExpressions[i + 1];
+
+				MethodInfo anyMethod = ReflectionUtils.GetGenericAnyMethod(lastParameterExpression.Type);
+				var callExpression = Expression.Call(anyMethod, memberExpression, lambdaExpression); // memberExpr
+				lambdaExpression = Expression.Lambda(callExpression, (ParameterExpression)parameterExpression);
+			}
+			return lambdaExpression;
+		}
+
+		internal static (ParameterExpression BaseParameterExpression, Expression BaseMemberExpression, ParameterExpression ListParameterExpression, Expression ListMemberExpression) GetExpressions2(Type baseObjectType, string propName)
 		{
 			ParameterExpression baseParameterExpression = Expression.Parameter(baseObjectType, "x");
 			MemberExpression baseMemberExpression = null;
@@ -154,6 +171,45 @@ namespace ArfFipaso.Filter.Utils
 			var safeListMemberExpression = GetSafeMemberExpression(listMemberExpression);
 
 			return (baseParameterExpression, safeBaseMemberExpression, listParameterExpression, safeListMemberExpression);
+		}
+
+
+		internal static (List<Expression> ParameterExpressions, List<Expression> MemberExpressions) GetExpressions(Type baseObjectType, string propName)
+		{
+			ParameterExpression baseParameterExpression = Expression.Parameter(baseObjectType, "x");
+			MemberExpression baseMemberExpression = null;
+
+			List<Expression> parameterExpressions = new List<Expression>();
+			List<Expression> memberExpressions = new List<Expression>();
+
+			var propertyParts = propName.Split(FilterConstants.ProperyDelimiter);
+			for (int i = 0; i < propertyParts.Length; i++)
+			{
+				var propertyPart = propertyParts[i];
+
+				if (baseMemberExpression == null)
+					baseMemberExpression = Expression.Property(baseParameterExpression, propertyPart);
+				else
+					baseMemberExpression = Expression.Property(baseMemberExpression, propertyPart);
+
+				if ((i == propertyParts.Length - 1) || (Nullable.GetUnderlyingType(baseMemberExpression.Type) == null && baseMemberExpression.Type.GetGenericArguments().Length > 0))
+				{
+					var safeBaseMemberExpression = GetSafeMemberExpression(baseMemberExpression);
+					parameterExpressions.Add(baseParameterExpression);
+					memberExpressions.Add(safeBaseMemberExpression);
+
+					if (i != propertyParts.Length - 1)
+					{
+						// Create new list expression
+						var type = baseMemberExpression.Type.GetGenericArguments()[0];
+						var paramChar = Convert.ToChar(97 + i) + ""; // a,b,c,d,e,...
+						baseParameterExpression = Expression.Parameter(type, paramChar);
+						baseMemberExpression = null;
+					}
+				}
+			}
+
+			return (parameterExpressions, memberExpressions);
 		}
 	}
 }
