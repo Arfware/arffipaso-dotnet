@@ -82,9 +82,26 @@ namespace ArfFipaso.Filter.Utils
 			return innnerLambda;
 		}
 
+		public string MakeVariantChanges(string value)
+		{
+
+
+			return value;
+		}
+
 		internal static LambdaExpression GetLambdaWithConstantContains(ParameterExpression parameterExpression, Expression memberExpression, object value)
 		{
-			ConstantExpression valExpression = Expression.Constant(value.ToString().Trim().ToLower(), typeof(string));
+			var cleanValue = value.ToString()
+									.Trim()
+									.Replace("I", "ı")
+									.Replace("İ", "i")
+									.Replace("Ö", "ö")
+									.Replace("Ü", "ü")
+									.Replace("Ç", "ç")
+									.Replace("Ş", "ş")
+									.Replace("Ğ", "ğ");
+
+			ConstantExpression valExpression = Expression.Constant(cleanValue.ToLower(), typeof(string));
 			MethodInfo stringToLowerMethod = ReflectionUtils.GetStringToLowerMethod();
 			MethodInfo stringContainsMethod = ReflectionUtils.GetStringContainsMethod();
 			var toLowerMethodExpr = Expression.Call(memberExpression, stringToLowerMethod);
