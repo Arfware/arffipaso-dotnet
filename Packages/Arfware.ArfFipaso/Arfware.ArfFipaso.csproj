@@ -2,8 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-
-		<PackageVersion>1.1.0</PackageVersion>
+		<PackageVersion>1.1.1</PackageVersion>
 		<Authors>Arfware</Authors>
 		<Company>Arfware</Company>
 		<Product>Arfware ArfFipaso</Product>

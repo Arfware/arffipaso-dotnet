@@ -16,6 +16,10 @@ Detailed documentation is in the 'Z-Docs' folder.
 
 ## Changelogs
 
+### 1.1.1
+
+- Added Added Turkish character correction support to Filtering.
+
 ### 1.1.0
 
 - Added List-in-List Search Feature.
